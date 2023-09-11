@@ -4,14 +4,12 @@
   >
     <SiteNavigation />
     <RouterView />
-    <HomeView/>
   </div>
 </template>
 
 <script setup>
 import { RouterView } from "vue-router";
 import SiteNavigation from "./components/SiteNavigation.vue";
-import HomeView from "./components/HomeView.vue";
 </script>
 
 <style lang="scss" scoped></style>
