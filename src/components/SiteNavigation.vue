@@ -68,26 +68,30 @@
   const route = useRoute();
   const router = useRouter();
   const addCity = () => { 
-    if(localStorage.getItem("savedCities")){
-      savedCities.value = JSON.parse(
-        localStorage.getItem("savedCities")
-      )
-    }
-    const locationObj = {
-    id : uid(),
+  if (localStorage.getItem("savedCities")) {
+    savedCities.value = JSON.parse(localStorage.getItem("savedCities"));
+  }
+  const locationObj = {
+    id: uid(),
     state: route.params.state,
     city: route.params.city,
-    coords:{
+    coords: {
       lat: route.query.lat,
       lon: route.query.lon
     }
+  };
+  // Ensure savedCities.value is initialized as an array
+  if (!Array.isArray(savedCities.value)) {
+    savedCities.value = [];
   }
   savedCities.value.push(locationObj);
-  localStorage.setItem('savedCities', JSON.stringify(savedCities))
-  let query = Object.assign({}, route.query)
+  localStorage.setItem('savedCities', JSON.stringify(savedCities.value)); // Save the updated array
+  let query = Object.assign({}, route.query);
   delete query.preview;
-  router.replace({query})
-  }
+  query.id = locationObj.id
+  router.replace({ query });
+}
+
 
   const modalActive = ref(null);
   const toggleModal = () => {
